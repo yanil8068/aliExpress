@@ -211,16 +211,6 @@ function LoginComponent({ togglePopup }) {
                   {error && (
                     <div className="error text-red-500 text-sm">{error}</div>
                   )}
-
-                  {/* Forgot password link */}
-                  <p
-                    onClick={(e) => {
-                      handlePasswordReset(e);
-                    }}
-                    className="forgot-password text-sm text-blue-500 hover:underline cursor-pointer"
-                  >
-                    Forgot Password?
-                  </p>
                 </form>
               </section>
             </div>
