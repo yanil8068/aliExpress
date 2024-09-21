@@ -3,7 +3,6 @@ import { auth } from "../../firebase/config.js"; // Import Firebase auth instanc
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  sendPasswordResetEmail,
   onAuthStateChanged,
 } from "firebase/auth";
 import { useDispatch } from "react-redux"; // Redux hook for dispatching actions
@@ -97,15 +96,6 @@ function LoginComponent({ togglePopup }) {
         setError(error.message);
       });
     togglePopup(); // Close the popup after login
-  }
-
-  // Function to handle password reset
-  function handlePasswordReset() {
-    const email = prompt("Please enter your email");
-    sendPasswordResetEmail(auth, email);
-    if (email) {
-      alert("Email sent! Check your inbox for password reset instructions");
-    }
   }
 
   return (

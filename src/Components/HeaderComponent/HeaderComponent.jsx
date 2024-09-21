@@ -11,7 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import LoginComponent from "../LoginComponent/LoginComponent";
 import { emptycartIteam } from "../../Redux/features/cartSlice";
 import axios from "axios";
-import { FaLaptop, FaGem, FaTshirt, FaMale, FaFemale } from "react-icons/fa"; // Import your icons
+import { FaLaptop, FaGem, FaMale, FaFemale } from "react-icons/fa"; // Import your icons
 
 const HeaderComponent = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -36,7 +36,6 @@ const HeaderComponent = () => {
     setIsPopupOpen((prevState) => !prevState);
   }
 
-  // Handle category click
   // Handle category click
   const handleCategoryClick = (category) => {
     if (category === "electronics") {
@@ -89,6 +88,7 @@ const HeaderComponent = () => {
     "women's clothing": <FaFemale />,
   };
 
+  //get all categories
   async function getCategories() {
     try {
       const response = await axios.get(
@@ -101,17 +101,12 @@ const HeaderComponent = () => {
       console.error("Error fetching categories:", error);
     }
   }
-  //get categories
+
   // Handle search input change
   const handleSearchInputChange = (event) => {
     setSearchTerm(event.target.value);
   };
 
-  // Handle search button click
-  // encodeURIComponent() converts these special characters into a format that can be safely used in a URL by replacing them with a percent-encoded string. Each character is represented by a percent sign (%) followed by a two-digit hexadecimal code that corresponds to the character's byte value in the UTF-8 encoding.
-  // const handleSearchButtonClick = () => {
-  //   navigate(`/search?query=${encodeURIComponent(searchTerm)}`);
-  // };
   // Handle search button click
   const handleSearchButtonClick = () => {
     if (searchTerm.trim()) {
@@ -161,32 +156,7 @@ const HeaderComponent = () => {
             <div className="text-4xl font-bold  mx-5">
               <Link to={"/"}>AliExpress</Link>
             </div>
-            {/* <div
-              className="bg-gray-600 p-2 rounded-full  mx-5 "
-              onMouseEnter={() => setIsDropdownOpen(true)}
-              onMouseLeave={() => setIsDropdownOpen(false)}
-            >
-              <GiHamburgerMenu />
 
-              {isDropdownOpen && (
-                <div className="absolute top-12 left-48 w-52 bg-gray-200 text-black shadow-lg rounded-md transition-opacity duration-200">
-                  <ul className="flex flex-col">
-                    {category.map((eachCategory) => (
-                      <li
-                        className="flex items-center px-4 py-3 hover:bg-white hover:font-semibold cursor-pointer transition-colors duration-150" // Increased padding here
-                        key={eachCategory}
-                        onClick={() => handleCategoryClick(eachCategory)}
-                      >
-                        <span className="mr-2">
-                          {categoryIcons[eachCategory]}
-                        </span>
-                        {eachCategory}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div> */}
             <div
               className="bg-gray-600 p-2 rounded-full mx-5  relative hidden lg:block"
               onMouseEnter={() => setIsDropdownOpen(true)}

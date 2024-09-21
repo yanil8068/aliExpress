@@ -10,195 +10,67 @@ import { emptycartIteam } from "../../Redux/features/cartSlice";
 import toast from "react-hot-toast";
 
 const CartComponent = () => {
-  const [totalprice, setPrice] = useState(0);
-  const [totalquantity, setTotalQuantity] = useState(0);
+  const [totalprice, setPrice] = useState(0); // State for storing total price of cart
+  const [totalquantity, setTotalQuantity] = useState(0); // State for storing total quantity of items
 
-  const { carts } = useSelector((state) => state.allCart);
+  const { carts } = useSelector((state) => state.allCart); // Fetch the cart data from Redux store
   const dispatch = useDispatch();
 
-  // add to cart
+  // Increment item quantity in cart
   const handleIncrement = (e) => {
-    dispatch(addToCart(e));
+    dispatch(addToCart(e)); // Dispatch add to cart action
   };
 
-  // remove to cart
+  // Decrement item quantity in cart
   const handleDecrement = (e) => {
-    dispatch(removeToCart(e));
-    toast.success("Item Remove From Your Cart");
+    dispatch(removeToCart(e)); // Dispatch remove action for the item
+    toast.success("Item Remove From Your Cart"); // Show success toast notification
   };
 
-  // remove single item
+  // Remove a single item from the cart
   const handleSingleDecrement = (e) => {
-    dispatch(removeSingleIteams(e));
+    dispatch(removeSingleIteams(e)); // Dispatch action to remove a single item
   };
 
-  // empty cart
+  // Empty the entire cart
   const emptycart = () => {
     dispatch(emptycartIteam());
     toast.success("Your Cart is Empty");
   };
 
-  // count total price
+  // Calculate the total price of the cart
   const total = () => {
     let totalprice = 0;
     carts.map((ele, ind) => {
-      totalprice = ele.price * ele.quantity + totalprice;
+      totalprice = ele.price * ele.quantity + totalprice; // Sum of price * quantity for each item
     });
-    setPrice(totalprice);
+    setPrice(totalprice); // Update the total price state
   };
 
-  // count total quantity
+  // Calculate the total quantity of items in the cart
   const countquantity = () => {
     let totalquantity = 0;
     carts.map((ele, ind) => {
-      totalquantity = ele.quantity + totalquantity;
+      totalquantity = ele.quantity + totalquantity; // Sum of all quantities
     });
-    setTotalQuantity(totalquantity);
+    setTotalQuantity(totalquantity); // Update the total quantity state
   };
 
+  // Recalculate total price whenever `carts` is updated
   useEffect(() => {
     total();
   }, [total]);
 
+  // Recalculate total quantity whenever `carts` is updated
   useEffect(() => {
     countquantity();
   }, [countquantity]);
 
-  // Calculate total price and total quantity
-  // const totalPrice = carts.reduce(
-  //   (total, item) => total + item.price * item.quantity,
-  //   0
-  // );
-  // const totalQuantity = carts.reduce((total, item) => total + item.quantity, 0);
-
   return (
-    // <div className="flex justify-center">
-    //   <div className="w-96 md:w-full max-w-4xl mt-10 mb-10">
-    //     <div className="bg-white shadow-md rounded-lg overflow-hidden">
-    //       <div className="bg-gray-800 p-1 md:p-4 flex justify-between items-center">
-    //         <h5 className="text-white text-lg font-semibold">
-    //           Cart Calculation {carts.length > 0 ? `(${carts.length})` : ""}
-    //         </h5>
-    //         <button
-    //           className="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded text-sm"
-    //           onClick={emptycart}
-    //         >
-    //           <i className="fas fa-trash-alt mr-2"></i>Empty Cart
-    //         </button>
-    //       </div>
-
-    //       <div className="p-0 md:p-4">
-    //         {carts.length === 0 ? (
-    //           <table className="min-w-fit md:min-w-full text-center">
-    //             <tbody>
-    //               <tr>
-    //                 <td colSpan={6}>
-    //                   <div className="flex flex-col items-center text-gray-500">
-    //                     <i className="fas fa-shopping-cart text-xs md:text-4xl"></i>
-    //                     <p className="mt-4 text-xs md:text-xs">
-    //                       Your Cart Is Empty
-    //                     </p>
-    //                   </div>
-    //                 </td>
-    //               </tr>
-    //             </tbody>
-    //           </table>
-    //         ) : (
-    //           <table className="min-w-fit md:min-w-full  table-auto mt-0 md:mt-4 ">
-    //             <thead>
-    //               <tr className="bg-gray-100">
-    //                 <th className="px-1 py-0 md:px-4 md:py-2">Action</th>
-    //                 <th className="px-1 py-0 md:px-4 md:py-2">Product</th>
-    //                 <th className="px-1 py-0 md:px-4 md:py-2">Name</th>
-    //                 <th className="px-1 py-0 md:px-4 md:py-2">Price</th>
-    //                 <th className="px-1 py-0 md:px-4 md:py-2">Qty</th>
-    //                 <th className="px-1 py-0 md:px-4 md:py-2 text-right">
-    //                   Total Amount
-    //                 </th>
-    //               </tr>
-    //             </thead>
-    //             <tbody>
-    //               {carts.map((item) => (
-    //                 <tr key={item.id}>
-    //                   <td className="px-1 py-1 md:px-4 md:py-2 ">
-    //                     <button
-    //                       className="text-red-600"
-    //                       onClick={() => handleDecrement(item.id)}
-    //                     >
-    //                       <FaTrash />
-    //                     </button>
-    //                   </td>
-    //                   <td className="px-1 py-1 md:px-4 md:py-2 ">
-    //                     <div className="w-16 h-16 bg-gray-200">
-    //                       <img
-    //                         src={item.image}
-    //                         alt={item.title}
-    //                         className="w-full h-full object-cover"
-    //                       />
-    //                     </div>
-    //                   </td>
-    //                   <td className="px-1 py-1 md:px-4 md:py-2 ">
-    //                     {item.title}
-    //                   </td>
-    //                   <td className="px-1 py-1 md:px-4 md:py-2 ">
-    //                     ₹ {item.price}
-    //                   </td>
-    //                   <td className="px-1 py-1 md:px-4 md:py-2 ">
-    //                     <div className="flex items-center space-x-2">
-    //                       <button
-    //                         className="bg-gray-200 text-gray-600 hover:bg-gray-300 px-2 py-1 rounded"
-    //                         onClick={
-    //                           item.quantity <= 1
-    //                             ? () => handleDecrement(item.id)
-    //                             : () => handleSingleDecrement(item)
-    //                         }
-    //                       >
-    //                         <FaMinus />
-    //                       </button>
-    //                       <input
-    //                         type="text"
-    //                         value={item.quantity}
-    //                         className="w-12 text-center bg-gray-100 border border-gray-300 rounded"
-    //                         disabled
-    //                       />
-    //                       <button
-    //                         className="bg-gray-200 text-gray-600 hover:bg-gray-300 px-2 py-1 rounded"
-    //                         onClick={() => {
-    //                           handleIncrement(item);
-    //                         }}
-    //                       >
-    //                         <FaPlus />
-    //                       </button>
-    //                     </div>
-    //                   </td>
-    //                   <td className="px-1 py-1 md:px-4 md:py-2  text-right">
-    //                     ₹ {item.quantity * item.price}
-    //                   </td>
-    //                 </tr>
-    //               ))}
-    //             </tbody>
-    //             <tfoot>
-    //               <tr>
-    //                 <td colSpan={4}></td>
-    //                 <td className="px-1 py-1 md:px-4 md:py-2  text-right font-semibold">
-    //                   Items In Cart:
-    //                   <span className="text-red-600 ml-2">{totalquantity}</span>
-    //                 </td>
-    //                 <td className="px-1 py-1 md:px-4 md:py-2  text-right font-semibold">
-    //                   Total Price:
-    //                   <span className="text-red-600 ml-2">₹ {totalprice}</span>
-    //                 </td>
-    //               </tr>
-    //             </tfoot>
-    //           </table>
-    //         )}
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
     <div className="flex justify-center">
       <div className="w-full md:max-w-4xl mt-10 mb-10">
         <div className="bg-white shadow-md rounded-lg overflow-hidden">
+          {/* Cart Header */}
           <div className="bg-gray-800 p-2 md:p-4 flex justify-between items-center">
             <h5 className="text-white text-lg font-semibold">
               Cart {carts.length > 0 ? `(${carts.length})` : ""}
@@ -212,6 +84,7 @@ const CartComponent = () => {
             </button>
           </div>
 
+          {/* Cart Body */}
           <div className="p-2 md:p-4 text-xs md:text-base">
             {carts.length === 0 ? (
               <div className="flex flex-col items-center text-xs md:text-base text-gray-500">

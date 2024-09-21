@@ -21,11 +21,12 @@ import toast, { Toaster } from "react-hot-toast";
 import ListProducts from "./Components/ListProducts/ListProducts";
 
 function App() {
-  const dispatch = useDispatch();
-  const user = useSelector(selectUsers);
-  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch(); // Get the dispatch function from Redux
+  const user = useSelector(selectUsers); // Select the current user from Redux state
+  const [loading, setLoading] = useState(true); // Local loading state
 
   useEffect(() => {
+    // Listen for authentication state changes
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is signed in
@@ -53,9 +54,13 @@ function App() {
           <>
             {" "}
             <Routes>
+              {/* Home route */}
               <Route path="/" element={<HomeComponent />} />
-              <Route path="/Cart" element={<CartComponent />} />
-              <Route path="/search" element={<SearchComponent />} />
+              {/* Cart route */}
+              <Route path="/Cart" element={<CartComponent />} />{" "}
+              {/* Search route */}
+              <Route path="/search" element={<SearchComponent />} />{" "}
+              {/* Product lists by category */}
               <Route
                 path="/mensList"
                 element={
@@ -92,19 +97,23 @@ function App() {
                   />
                 }
               />
+              {/* Product detail route */}
               <Route
                 path="/:product/:id"
                 element={<ProductDetailComponent />}
               />
             </Routes>
-            <Toaster />
+            <Toaster /> {/* Toast notifications */}
           </>
         ) : (
           <>
             {" "}
             <Routes>
+              {/* Home route */}
               <Route path="/" element={<HomeComponent />} />
+              {/* search route */}
               <Route path="/search" element={<SearchComponent />} />
+              {/* Product lists by category */}
               <Route
                 path="/mensList"
                 element={
@@ -141,15 +150,17 @@ function App() {
                   />
                 }
               />
+              {/* product details route */}
               <Route
                 path="/:product/:id"
                 element={<ProductDetailComponent />}
               />
             </Routes>
+            {/* Toast notifications */}
             <Toaster />
           </>
         )}
-
+        {/* Render footer */}
         <FooterComponent />
       </BrowserRouter>
     </>

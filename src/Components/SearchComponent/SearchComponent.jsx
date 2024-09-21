@@ -8,30 +8,33 @@ import { auth } from "../../firebase/config";
 import LoginComponent from "../LoginComponent/LoginComponent";
 
 const SearchComponent = () => {
-  const [products, setProducts] = useState([]);
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const query = queryParams.get("query");
+  const [products, setProducts] = useState([]); // State to hold search results
+  const location = useLocation(); // Get current location to read query params
+  const queryParams = new URLSearchParams(location.search); // Create URLSearchParams object to parse query params
+  const query = queryParams.get("query"); // Get the search query from URL
 
+  // Effect to fetch search results whenever the query changes
   useEffect(() => {
     if (query) {
-      fetchSearchResults(query);
+      fetchSearchResults(query); // Call the function to fetch results
     }
-  }, [query]);
+  }, [query]); // Dependency array includes query
 
+  // Function to fetch products based on the search term
   async function fetchSearchResults(searchTerm) {
     try {
-      const response = await axios.get(`https://fakestoreapi.com/products`);
-      const filtered = response.data.filter((product) =>
-        product.title.toLowerCase().includes(searchTerm.toLowerCase())
+      const response = await axios.get(`https://fakestoreapi.com/products`); // Fetch all products
+      const filtered = response.data.filter(
+        (product) =>
+          product.title.toLowerCase().includes(searchTerm.toLowerCase()) // Filter products by title
       );
-      setProducts(filtered);
+      setProducts(filtered); // Update state with filtered products
     } catch (error) {
-      console.error("Error fetching search results:", error);
+      console.error("Error fetching search results:", error); // Handle error
     }
   }
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); // Initialize dispatch for Redux
 
   // Local state to handle the popup for login/signup
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -51,46 +54,46 @@ const SearchComponent = () => {
   }
   const sendToCart = (product) => {
     dispatch(addProductToCart(product)); // Dispatch product to cart
-    toast.success("Item added In Your Cart");
-    console.log("Item added In Your Cart", product);
+    toast.success("Item added In Your Cart"); // Show success notification
   };
-
-  // const handleCartButtonClick = (product) => {
-  //   dispatch(addProductToCart(product)); // Dispatch product to cart
-  //   toast.success("Item added to your cart");
-  // };
 
   return (
     <>
       <div style={{ padding: "20px" }}>
         <h1>Search Results for "{query}"</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {products.length > 0 ? (
-            products.map((product) => (
-              <div
-                key={product.id}
-                className="bg-white shadow-md rounded-lg p-4 flex flex-col justify-between"
-              >
-                <img
-                  src={product.image}
-                  alt={product.title}
-                  className="w-full h-48 object-cover mb-4 rounded"
-                />
-                <h2 className="text-lg font-semibold">{product.title}</h2>
-                <p className="text-gray-700 mt-2">${product.price}</p>
-                <p className="text-gray-500 mt-2">
-                  Quantity: {product.quantity}
-                </p>
-                <button
-                  className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                  onClick={() => handleCartButtonClick(product)} // Use the renamed function
+          {products.length > 0 ? ( // Check if there are products to display
+            products.map(
+              (
+                product // Map over each product
+              ) => (
+                <div
+                  key={product.id}
+                  className="bg-white shadow-md rounded-lg p-4 flex flex-col justify-between"
                 >
-                  Add to Cart
-                </button>
-              </div>
-            ))
+                  <img
+                    src={product.image}
+                    alt={product.title}
+                    className="w-full h-48 object-cover mb-4 rounded"
+                  />
+                  <h2 className="text-lg font-semibold">{product.title}</h2>{" "}
+                  {/* Product title */}
+                  <p className="text-gray-700 mt-2">${product.price}</p>
+                  <p className="text-gray-500 mt-2">
+                    Quantity: {product.quantity}{" "}
+                    {/* Display product quantity */}
+                  </p>
+                  <button
+                    className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                    onClick={() => handleCartButtonClick(product)} // Handle add to cart
+                  >
+                    Add to Cart
+                  </button>
+                </div>
+              )
+            )
           ) : (
-            <p>No products found for "{query}".</p>
+            <p>No products found for "{query}".</p> // Message when no products are found
           )}
         </div>
       </div>

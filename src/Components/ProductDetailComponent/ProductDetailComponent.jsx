@@ -84,57 +84,6 @@ const ProductDetailComponent = () => {
   }
 
   return (
-    // <div>
-    //   {product ? (
-    //     <div>
-    //       <h2>{product.title}</h2>
-    //       <img
-    //         src={product.image}
-    //         alt={product.title}
-    //         style={{ width: "300px" }}
-    //       />
-    //       <p>{product.description}</p>
-    //       <p>Price: ${product.price}</p>
-    //       <p>Rating: {product.rating.rate} stars</p>
-    //       <button>AddToCart</button>
-
-    //       <h3>Related Products</h3>
-    //       {relatedLoading ? (
-    //         <p>Loading related products...</p>
-    //       ) : (
-    //         <div style={{ display: "flex", flexWrap: "wrap" }}>
-    //           {relatedProducts.length > 0 ? (
-    //             relatedProducts.map((relatedProduct) => (
-    //               <div
-    //                 key={relatedProduct.id}
-    //                 style={{
-    //                   border: "1px solid #ccc",
-    //                   padding: "10px",
-    //                   margin: "10px",
-    //                   width: "200px",
-    //                   cursor: "pointer",
-    //                 }}
-    //                 onClick={() => navigate(`/product/${relatedProduct.id}`)} // Navigate to clicked product detail page
-    //               >
-    //                 <h4>{relatedProduct.title}</h4>
-    //                 <img
-    //                   src={relatedProduct.image}
-    //                   alt={relatedProduct.title}
-    //                   style={{ width: "100%" }}
-    //                 />
-    //                 <p>Price: ${relatedProduct.price}</p>
-    //               </div>
-    //             ))
-    //           ) : (
-    //             <p>No related products found.</p>
-    //           )}
-    //         </div>
-    //       )}
-    //     </div>
-    //   ) : (
-    //     <p>Product not found</p>
-    //   )}
-    // </div>
     <div className="bg-gray-300">
       <div className="container mx-auto p-4 bg-gray-300">
         {product ? (

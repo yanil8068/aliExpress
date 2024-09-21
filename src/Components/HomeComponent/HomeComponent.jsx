@@ -3,15 +3,11 @@ import axios from "axios"; // Import axios
 import { useDispatch } from "react-redux";
 import { addToCart as addProductToCart } from "../../Redux/features/cartSlice"; // Rename for clarity
 import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
-import { emptycartIteam } from "../../Redux/features/cartSlice";
+import { Link } from "react-router-dom";
 import { auth } from "../../firebase/config";
-import { signOut } from "firebase/auth";
-import { setUser, selectUsers } from "../../Redux/Authentication/usersSlice";
 import LoginComponent from "../LoginComponent/LoginComponent";
 import TopBannerInHomePage from "../../assets/TopBannerInHomePage.avif"; // Adjust the path based on your folder structure
 import { FaStar } from "react-icons/fa";
-import { FaFemale } from "react-icons/fa";
 
 const HomeComponent = () => {
   const [womensProducts, setWomensProducts] = useState([]);
@@ -31,22 +27,7 @@ const HomeComponent = () => {
     setIsPopupOpen((prevState) => !prevState);
   }
 
-  function handleCartButtonClick(product) {
-    if (auth.currentUser) {
-      sendToCart(product);
-      // navigate("/cart"); // Navigate to the cart if the user is logged in
-    } else {
-      togglePopup(); // Open the login/signup modal if the user is not logged in
-    }
-  }
-
   const dispatch = useDispatch();
-
-  const sendToCart = (product) => {
-    dispatch(addProductToCart(product)); // Dispatch product to cart
-    toast.success("Item added In Your Cart");
-    console.log("Item added In Your Cart", product);
-  };
 
   useEffect(() => {
     getWomensProducts();
@@ -155,18 +136,6 @@ const HomeComponent = () => {
           ) : (
             <div className="flex justify-center items-center ">
               {mensProducts.map((product) => (
-                // <div
-                //   key={product.id}
-                //   className="bg-white shadow-md rounded-lg p-4 flex flex-col justify-between"
-                // >
-                //   <img
-                //     src={product.image}
-                //     alt={product.title}
-                //     className="w-full h-48 object-cover mb-4 rounded"
-                //   />
-                //   <h2 className="text-lg font-semibold">{product.title}</h2>
-                //   <p className="text-gray-700 mt-2">${product.price}</p>
-                // </div>
                 <div
                   key={product.id}
                   className="flex justify-center m-2 items-center rounded-lg shadow-md overflow-hidden bg-white p-1 md:p-3  "
@@ -179,9 +148,7 @@ const HomeComponent = () => {
                         className="w-36 h-40 md:w-52 md:h-80 object-cover rounded-2xl  md:px-2 "
                       />
                     </div>
-                    {/* <p className="text-xs font-semibold text-center">
-                      {product.title.split(" ").slice(0, 3).join(" ")}
-                    </p> */}
+
                     <div className="flex justify-center items-center ">
                       <div className="flex items-center justify-center bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded my-2 w-fit">
                         <div>
@@ -214,18 +181,6 @@ const HomeComponent = () => {
           ) : (
             <div className="flex justify-center items-center ">
               {womensProducts.map((product) => (
-                // <div
-                //   key={product.id}
-                //   className="bg-white shadow-md rounded-lg p-4 flex flex-col justify-between"
-                // >
-                //   <img
-                //     src={product.image}
-                //     alt={product.title}
-                //     className="w-full h-48 object-cover mb-4 rounded"
-                //   />
-                //   <h2 className="text-lg font-semibold">{product.title}</h2>
-                //   <p className="text-gray-700 mt-2">${product.price}</p>
-                // </div>
                 <div
                   key={product.id}
                   className="flex justify-center m-2 items-center rounded-lg shadow-md overflow-hidden bg-white p-1 md:p-3  "
@@ -238,9 +193,7 @@ const HomeComponent = () => {
                         className="w-36 h-40 md:w-52 md:h-80 object-cover rounded-2xl  md:px-2 "
                       />
                     </div>
-                    {/* <p className="text-xs font-semibold text-center">
-                      {product.title.split(" ").slice(0, 3).join(" ")}
-                    </p> */}
+
                     <div className="flex justify-center items-center ">
                       <div className="flex items-center justify-center bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded my-2 w-fit">
                         <div>
@@ -273,18 +226,6 @@ const HomeComponent = () => {
           ) : (
             <div className="flex justify-center items-center ">
               {jewelleryProducts.map((product) => (
-                // <div
-                //   key={product.id}
-                //   className="bg-white shadow-md rounded-lg p-4 flex flex-col justify-between"
-                // >
-                //   <img
-                //     src={product.image}
-                //     alt={product.title}
-                //     className="w-full h-48 object-cover mb-4 rounded"
-                //   />
-                //   <h2 className="text-lg font-semibold">{product.title}</h2>
-                //   <p className="text-gray-700 mt-2">${product.price}</p>
-                // </div>
                 <div
                   key={product.id}
                   className="flex justify-center m-2 items-center rounded-lg shadow-md overflow-hidden bg-white p-1 md:p-3  "
@@ -297,9 +238,7 @@ const HomeComponent = () => {
                         className="w-36 h-40 md:w-52 md:h-80 object-cover rounded-2xl  md:px-2 "
                       />
                     </div>
-                    {/* <p className="text-xs font-semibold text-center">
-                      {product.title.split(" ").slice(0, 3).join(" ")}
-                    </p> */}
+
                     <div className="flex justify-center items-center ">
                       <div className="flex items-center justify-center bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded my-2 w-fit">
                         <div>
@@ -332,18 +271,6 @@ const HomeComponent = () => {
           ) : (
             <div className="flex justify-center items-center ">
               {electronicsProducts.map((product) => (
-                // <div
-                //   key={product.id}
-                //   className="bg-white shadow-md rounded-lg p-4 flex flex-col justify-between"
-                // >
-                //   <img
-                //     src={product.image}
-                //     alt={product.title}
-                //     className="w-full h-48 object-cover mb-4 rounded"
-                //   />
-                //   <h2 className="text-lg font-semibold">{product.title}</h2>
-                //   <p className="text-gray-700 mt-2">${product.price}</p>
-                // </div>
                 <div
                   key={product.id}
                   className="flex justify-center m-2 items-center rounded-lg shadow-md overflow-hidden bg-white p-1 md:p-3  "
@@ -356,9 +283,7 @@ const HomeComponent = () => {
                         className="w-36 h-40 md:w-52 md:h-80 object-cover rounded-2xl  md:px-2 "
                       />
                     </div>
-                    {/* <p className="text-xs font-semibold text-center">
-                      {product.title.split(" ").slice(0, 3).join(" ")}
-                    </p> */}
+
                     <div className="flex justify-center items-center ">
                       <div className="flex items-center justify-center bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded my-2 w-fit">
                         <div>
